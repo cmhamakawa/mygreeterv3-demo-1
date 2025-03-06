@@ -108,7 +108,10 @@ func (s *Server) Init(options Options) {
 	}
 
 	if options.DemoServerAddr != "" {
-		s.demoserverClient, err = client.NewClient(options.DemoServerAddr, interceptor.GetClientInterceptorLogOptions(logger, logattrs.GetAttrs()))
+
+		// Error: misnamed
+		s.client, err = client.NewClient(options.DemoServerAddr, interceptor.GetClientInterceptorLogOptions(logger, logattrs.GetAttrs()))
+		log.Info("Connecting to demo server at " + options.DemoServerAddr)
 		// logging the error for transparency, retry interceptor will handle it
 		if err != nil {
 			log.Error("did not connect to demoserver: " + err.Error())

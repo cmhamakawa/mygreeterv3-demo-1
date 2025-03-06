@@ -15,18 +15,22 @@ type Server struct {
 }
 
 func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
-	return &pb.HelloReply{Message: "Hello " + in.GetName()}, nil
+	println("Running SayHello")
+
+	return &pb.HelloReply{Message: "Hello from demoserver |" + in.GetName()}, nil
 }
 
 func NewServer() *Server {
 	return &Server{}
 }
 
-func (s *Server) Serve(port int) error {
+func (s *Server) Serve(options Options) error { // this has en error
+	port := options.Port
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		return fmt.Errorf("failed to listen: %v", err)
 	}
+	println("Listening on port: ", port)
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterMyGreeterServer(grpcServer, s)
@@ -38,4 +42,8 @@ func (s *Server) Serve(port int) error {
 
 func (s *Server) Cleanup() {
 	// Implement any cleanup logic if needed
+}
+
+
+func (s *Server) Init(options Options) {
 }

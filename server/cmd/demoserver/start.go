@@ -22,18 +22,6 @@ func init() {
 
 	startCmd.Flags().IntVar(&options.Port, "port", 50052, "the port to serve the demoserver on")
 	startCmd.Flags().BoolVar(&options.JsonLog, "json-log", false, "The format of the log is json or user friendly key-value pairs")
-	startCmd.Flags().StringVar(&options.SubscriptionID, "subscription-id", "", "The subscription ID used to access and manage Azure resources")
-	startCmd.Flags().BoolVar(&options.EnableAzureSDKCalls, "enable-azureSDK-calls", false, "Toggle to run azureSDK CRUDL calls if cluster is enabled with workload-id")
-	startCmd.Flags().IntVar(&options.HTTPPort, "http port", 50062, "the port to serve the gRPC-Gateway on")
-	startCmd.Flags().StringVar(&options.IdentityResourceID, "identity-resource-id", "", "the MSI used to authenticate to Azure from E2E env")
-	startCmd.Flags().StringVar(&options.OperationContainerAddr, "opcon-addr", "localhost:50042", "the remote server's addr for this client to connect to")
-	startCmd.Flags().StringVar(&options.ServiceBusHostName, "service-bus-hostname", "servicehubval-resourceName-location-sb-ns.servicebus.windows.net", "The host name used to connect to the service bus.")
-	startCmd.Flags().StringVar(&options.ServiceBusQueueName, "service-bus-queue-name", "servicehubval-resourceName-queue", "The name of the queue to which we will send messages.")
-	startCmd.Flags().StringVar(&options.DatabaseConnectionString, "database-connection-string", "", "Connection string used to connect to the database")
-	startCmd.Flags().StringVar(&options.DatabaseServerUrl, "database-server-url", "", "The server of the database to connect to.")
-	startCmd.Flags().StringVar(&options.DatabaseName, "database-name", "", "The name of the database to connect to.")
-	startCmd.Flags().IntVar(&options.DatabasePort, "database-port", 1433, "The port to connect to the database")
-	startCmd.Flags().StringVar(&options.EntityTableName, "entity-table-name", "hcp", "The name of the table that holds entity metadata and last operation affecting that entity.")
 }
 
 func start(cmd *cobra.Command, args []string) {
