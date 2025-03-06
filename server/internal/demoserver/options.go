@@ -2,7 +2,6 @@ package demoserver
 
 import (
 	"github.com/spf13/cobra"
-	log "log/slog"
 )
 
 type Options struct {

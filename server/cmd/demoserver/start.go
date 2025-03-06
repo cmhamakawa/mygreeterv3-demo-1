@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"os"
-
 	"dev.azure.com/service-hub-flg/service_hub_validation/_git/service_hub_validation_service.git/mygreeterv3/server/internal/demoserver"
 	"github.com/spf13/cobra"
 	log "log/slog"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 var startCmd = &cobra.Command{
