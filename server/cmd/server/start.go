@@ -1,4 +1,3 @@
-// Auto generated. Can be modified.
 package main
 
 import (
@@ -38,6 +37,7 @@ func init() {
 	startCmd.Flags().StringVar(&options.DatabaseName, "database-name", "", "The name of the database to connect to.")
 	startCmd.Flags().IntVar(&options.DatabasePort, "database-port", 1433, "The port to connect to the database")
 	startCmd.Flags().StringVar(&options.EntityTableName, "entity-table-name", "hcp", "The name of the table that holds entity metadata and last operation affecting that entity.")
+	startCmd.Flags().StringVar(&options.DemoserverAddr, "demoserver-addr", "", "the demoserver's address for this server to connect to")
 }
 
 func start(cmd *cobra.Command, args []string) {
