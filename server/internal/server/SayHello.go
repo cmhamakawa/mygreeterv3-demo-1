@@ -30,5 +30,14 @@ func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 	} else {
 		out, err = &pb.HelloReply{Message: "Echo back what you sent me (SayHello): " + in.GetName() + " " + strconv.Itoa(int(in.GetAge())) + " " + in.GetEmail()}, nil
 	}
+
+	if s.demoserverClient != nil {
+		demoOut, demoErr := s.demoserverClient.SayHello(ctx, in)
+		if demoErr != nil {
+			return out, demoErr
+		}
+		out.Message += " | " + demoOut.Message
+	}
+
 	return out, err
 }
