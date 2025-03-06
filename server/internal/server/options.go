@@ -1,4 +1,3 @@
-// Auto generated. Can be modified.
 package server
 
 type Options struct {
@@ -18,4 +17,5 @@ type Options struct {
 	DatabaseName             string
 	DatabaseConnectionString string
 	EntityTableName          string
+	DemoserverAddr           string
 }

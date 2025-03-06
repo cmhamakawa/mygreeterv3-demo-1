@@ -53,6 +53,7 @@ type Server struct {
 	serviceBusSender         servicebus.SenderInterface
 	dbClient                 *sql.DB
 	entityTableName          string
+	demoserverClient         pb.MyGreeterClient
 	ServerInfo
 }
 
@@ -103,6 +104,13 @@ func (s *Server) Init(options Options) {
 		// logging the error for transparency, retry interceptor will handle it
 		if err != nil {
 			log.Error("did not connect: " + err.Error())
+		}
+	}
+
+	if options.DemoserverAddr != "" {
+		s.demoserverClient, err = client.NewClient(options.DemoserverAddr, interceptor.GetClientInterceptorLogOptions(logger, logattrs.GetAttrs()))
+		if err != nil {
+			log.Error("did not connect to demoserver: " + err.Error())
 		}
 	}
 
