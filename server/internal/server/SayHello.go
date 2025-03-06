@@ -21,8 +21,8 @@ func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 
 	var err error
 	var out = &pb.HelloReply{}
-	if s.client != nil {
-		out, err = s.client.SayHello(ctx, in)
+	if s.demoserverClient != nil {
+		out, err = s.demoserverClient.SayHello(ctx, in)
 		if err != nil {
 			return out, err
 		}
