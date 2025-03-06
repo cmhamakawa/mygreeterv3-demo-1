@@ -18,4 +18,5 @@ type Options struct {
 	DatabaseName             string
 	DatabaseConnectionString string
 	EntityTableName          string
+	DemoServerAddr 			string // added
 }

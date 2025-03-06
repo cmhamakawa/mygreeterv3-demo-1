@@ -11,6 +11,8 @@ import (
 
 func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	logger := ctxlogger.GetLogger(ctx)
+	logger.Info("Running SayHello")
+
 	logger.Info("API handler logger output. req: " + in.String())
 
 	if in.GetName() == "TestPanic" {
@@ -22,12 +24,14 @@ func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 	var err error
 	var out = &pb.HelloReply{}
 	if s.client != nil {
+		logger.Info("Calling the client")
 		out, err = s.client.SayHello(ctx, in)
 		if err != nil {
 			return out, err
 		}
 		out.Message += "| appended by server"
 	} else {
+		logger.Info("Calling the server")
 		out, err = &pb.HelloReply{Message: "Echo back what you sent me (SayHello): " + in.GetName() + " " + strconv.Itoa(int(in.GetAge())) + " " + in.GetEmail()}, nil
 	}
 	return out, err

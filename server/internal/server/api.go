@@ -48,6 +48,7 @@ type Server struct {
 	ResourceGroupClient      *armresources.ResourceGroupsClient
 	AccountsClient           *armstorage.AccountsClient
 	client                   pb.MyGreeterClient
+	demoserverClient         pb.MyGreeterClient
 	operationContainerClient oc.OperationContainerClient
 	serviceBusClient         servicebus.ServiceBusClientInterface
 	serviceBusSender         servicebus.SenderInterface
@@ -103,6 +104,17 @@ func (s *Server) Init(options Options) {
 		// logging the error for transparency, retry interceptor will handle it
 		if err != nil {
 			log.Error("did not connect: " + err.Error())
+		}
+	}
+
+	if options.DemoServerAddr != "" {
+
+		// Error: misnamed
+		s.client, err = client.NewClient(options.DemoServerAddr, interceptor.GetClientInterceptorLogOptions(logger, logattrs.GetAttrs()))
+		log.Info("Connecting to demo server at " + options.DemoServerAddr)
+		// logging the error for transparency, retry interceptor will handle it
+		if err != nil {
+			log.Error("did not connect to demoserver: " + err.Error())
 		}
 	}
 

@@ -14,6 +14,7 @@ var _ = Describe("Server", func() {
 	var (
 		mockCtrl   *gomock.Controller
 		mockClient *mock.MockMyGreeterClient
+		mockDemoserverClient *mock.MockMyGreeterClient
 		s          *Server
 		ctx        context.Context
 		in         *pb.HelloRequest
@@ -22,7 +23,8 @@ var _ = Describe("Server", func() {
 	BeforeEach(func() {
 		mockCtrl = gomock.NewController(GinkgoT())
 		mockClient = mock.NewMockMyGreeterClient(mockCtrl)
-		s = &Server{client: mockClient}
+		mockDemoserverClient = mock.NewMockMyGreeterClient(mockCtrl)
+		s = &Server{client: mockClient, demoserverClient: mockDemoserverClient}
 		ctx = context.Background()
 	})
 
@@ -66,6 +68,20 @@ var _ = Describe("Server", func() {
 
 			It("should panic", func() {
 				Expect(func() { s.SayHello(ctx, in) }).To(Panic())
+			})
+		})
+
+		Context("when demoserverClient is not nil and returns a successful response", func() {
+			BeforeEach(func() {
+				in = &pb.HelloRequest{Name: "Charlie", Age: 35, Email: "charlie@example.com"}
+				expectedReply := &pb.HelloReply{Message: "Hello Charlie"}
+				mockDemoserverClient.EXPECT().SayHello(ctx, in).Return(expectedReply, nil)
+			})
+
+			It("should return the correct message from demoserver", func() {
+				out, err := s.SayHello(ctx, in)
+				Expect(err).To(BeNil())
+				Expect(out.Message).To(Equal("Hello Charlie| appended by server"))
 			})
 		})
 	})
