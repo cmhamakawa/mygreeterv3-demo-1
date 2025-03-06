@@ -190,6 +190,13 @@ func (s *Server) Init(options Options) {
 			logger.Info(fmt.Sprintf("The table %s has been created.", options.EntityTableName))
 		}
 	}
+
+	if options.ForwardToDemoserver && options.RemoteAddr != "" {
+		s.client, err = client.NewClient(options.RemoteAddr, interceptor.GetClientInterceptorLogOptions(logger, logattrs.GetAttrs()))
+		if err != nil {
+			log.Error("did not connect to demoserver: " + err.Error())
+		}
+	}
 }
 
 func sanitizeTableName(tableName string) error {
